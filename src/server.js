@@ -6,7 +6,6 @@ const cors = require("cors");
 const api = express();
 const db = require("./db").connect();
 const middlewareLog = require("./middlewares/log");
-const { verificarToken } = require("./middlewares/autenticacaomiddleware");
 
 db.then(() => {
     console.log("Banco de dados conectado com sucesso...");
@@ -34,7 +33,7 @@ api.use('/info', infoRoute);
 
 // rotas de Conta
 const contaRoute = require('./routes/Contaroute');
-api.use('/conta', verificarToken, middlewareLog.log, contaRoute);
+api.use('/conta', middlewareLog.log, contaRoute);
 
 // rota de usuário
 

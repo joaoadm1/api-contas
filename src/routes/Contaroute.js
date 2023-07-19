@@ -2,8 +2,9 @@
 
 const express = require("express");
 const router = express.Router();
-let contas = require("../contasdb");
-const contaService = require('../services/Contaservice')
+const contaService = require('../services/Contaservice');
+const { verificarToken } = require("../middlewares/autenticacaomiddleware");
+
 
 router.get("", async (request, response) => {
     const contas = await contaService.listarTodasContas();
@@ -20,7 +21,7 @@ router.get("/:id", async (request, response) => {
 //POST
 //body params
 
-router.post("", async (request, response) => {
+router.post("", verificarToken, async (request, response) => {
     const novaConta = await contaService.cadastrarNovaConta(request.body);
     return response.json(novaConta);
     //return response.json(await contaService.cadastrarNovaConta(request.body));
